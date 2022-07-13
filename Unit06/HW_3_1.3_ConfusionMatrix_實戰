@@ -1,0 +1,539 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#載入套件\n",
+    "import pandas as pd\n",
+    "import seaborn as sns\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "%matplotlib inline"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>WTT</th>\n",
+       "      <th>PTI</th>\n",
+       "      <th>EQW</th>\n",
+       "      <th>SBI</th>\n",
+       "      <th>LQE</th>\n",
+       "      <th>QWG</th>\n",
+       "      <th>FDJ</th>\n",
+       "      <th>PJF</th>\n",
+       "      <th>HQE</th>\n",
+       "      <th>NXJ</th>\n",
+       "      <th>TARGET CLASS</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0.913917</td>\n",
+       "      <td>1.162073</td>\n",
+       "      <td>0.567946</td>\n",
+       "      <td>0.755464</td>\n",
+       "      <td>0.780862</td>\n",
+       "      <td>0.352608</td>\n",
+       "      <td>0.759697</td>\n",
+       "      <td>0.643798</td>\n",
+       "      <td>0.879422</td>\n",
+       "      <td>1.231409</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0.635632</td>\n",
+       "      <td>1.003722</td>\n",
+       "      <td>0.535342</td>\n",
+       "      <td>0.825645</td>\n",
+       "      <td>0.924109</td>\n",
+       "      <td>0.648450</td>\n",
+       "      <td>0.675334</td>\n",
+       "      <td>1.013546</td>\n",
+       "      <td>0.621552</td>\n",
+       "      <td>1.492702</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>0.721360</td>\n",
+       "      <td>1.201493</td>\n",
+       "      <td>0.921990</td>\n",
+       "      <td>0.855595</td>\n",
+       "      <td>1.526629</td>\n",
+       "      <td>0.720781</td>\n",
+       "      <td>1.626351</td>\n",
+       "      <td>1.154483</td>\n",
+       "      <td>0.957877</td>\n",
+       "      <td>1.285597</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1.234204</td>\n",
+       "      <td>1.386726</td>\n",
+       "      <td>0.653046</td>\n",
+       "      <td>0.825624</td>\n",
+       "      <td>1.142504</td>\n",
+       "      <td>0.875128</td>\n",
+       "      <td>1.409708</td>\n",
+       "      <td>1.380003</td>\n",
+       "      <td>1.522692</td>\n",
+       "      <td>1.153093</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1.279491</td>\n",
+       "      <td>0.949750</td>\n",
+       "      <td>0.627280</td>\n",
+       "      <td>0.668976</td>\n",
+       "      <td>1.232537</td>\n",
+       "      <td>0.703727</td>\n",
+       "      <td>1.115596</td>\n",
+       "      <td>0.646691</td>\n",
+       "      <td>1.463812</td>\n",
+       "      <td>1.419167</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        WTT       PTI       EQW       SBI       LQE       QWG       FDJ  \\\n",
+       "0  0.913917  1.162073  0.567946  0.755464  0.780862  0.352608  0.759697   \n",
+       "1  0.635632  1.003722  0.535342  0.825645  0.924109  0.648450  0.675334   \n",
+       "2  0.721360  1.201493  0.921990  0.855595  1.526629  0.720781  1.626351   \n",
+       "3  1.234204  1.386726  0.653046  0.825624  1.142504  0.875128  1.409708   \n",
+       "4  1.279491  0.949750  0.627280  0.668976  1.232537  0.703727  1.115596   \n",
+       "\n",
+       "        PJF       HQE       NXJ  TARGET CLASS  \n",
+       "0  0.643798  0.879422  1.231409             1  \n",
+       "1  1.013546  0.621552  1.492702             0  \n",
+       "2  1.154483  0.957877  1.285597             0  \n",
+       "3  1.380003  1.522692  1.153093             1  \n",
+       "4  0.646691  1.463812  1.419167             1  "
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#匯入資料（但所有變數名稱皆是隱藏，但需要預測最後TARGET CLASS是哪個）\n",
+    "#index_col=0代表設定第一行為index\n",
+    "df = pd.read_csv('data/Classified Data',index_col=0)\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "          WTT       PTI       EQW       SBI       LQE       QWG       FDJ  \\\n",
+      "0   -0.123542  0.185907 -0.913431  0.319629 -1.033637 -2.308375 -0.798951   \n",
+      "1   -1.084836 -0.430348 -1.025313  0.625388 -0.444847 -1.152706 -1.129797   \n",
+      "2   -0.788702  0.339318  0.301511  0.755873  2.031693 -0.870156  2.599818   \n",
+      "3    0.982841  1.060193 -0.621399  0.625299  0.452820 -0.267220  1.750208   \n",
+      "4    1.139275 -0.640392 -0.709819 -0.057175  0.822886 -0.936773  0.596782   \n",
+      "..        ...       ...       ...       ...       ...       ...       ...   \n",
+      "995  0.211653 -0.312490  0.065163 -0.259834  0.017567 -1.395721 -0.849486   \n",
+      "996 -1.292453 -0.616901  0.369613  0.482648  1.569891  1.273495  0.362784   \n",
+      "997  0.641777 -0.513083 -0.179205  1.022255 -0.539703 -0.229680 -2.261339   \n",
+      "998  0.467072 -0.982786 -1.465194 -0.071465  2.368666  0.001269 -0.422041   \n",
+      "999 -0.387654 -0.595894 -1.431398  0.512722 -0.402552 -2.026512 -0.726253   \n",
+      "\n",
+      "          PJF       HQE       NXJ  \n",
+      "0   -1.482368 -0.949719 -0.643314  \n",
+      "1   -0.202240 -1.828051  0.636759  \n",
+      "2    0.285707 -0.682494 -0.377850  \n",
+      "3    1.066491  1.241325 -1.026987  \n",
+      "4   -1.472352  1.040772  0.276510  \n",
+      "..        ...       ...       ...  \n",
+      "995 -2.604264 -0.139347 -0.069602  \n",
+      "996 -1.242110 -0.679746  1.473448  \n",
+      "997 -2.362494 -0.814261  0.111597  \n",
+      "998 -0.036777  0.406025 -0.855670  \n",
+      "999 -0.567789  0.336997  0.010350  \n",
+      "\n",
+      "[1000 rows x 10 columns]\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>WTT</th>\n",
+       "      <th>PTI</th>\n",
+       "      <th>EQW</th>\n",
+       "      <th>SBI</th>\n",
+       "      <th>LQE</th>\n",
+       "      <th>QWG</th>\n",
+       "      <th>FDJ</th>\n",
+       "      <th>PJF</th>\n",
+       "      <th>HQE</th>\n",
+       "      <th>NXJ</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>-0.123542</td>\n",
+       "      <td>0.185907</td>\n",
+       "      <td>-0.913431</td>\n",
+       "      <td>0.319629</td>\n",
+       "      <td>-1.033637</td>\n",
+       "      <td>-2.308375</td>\n",
+       "      <td>-0.798951</td>\n",
+       "      <td>-1.482368</td>\n",
+       "      <td>-0.949719</td>\n",
+       "      <td>-0.643314</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>-1.084836</td>\n",
+       "      <td>-0.430348</td>\n",
+       "      <td>-1.025313</td>\n",
+       "      <td>0.625388</td>\n",
+       "      <td>-0.444847</td>\n",
+       "      <td>-1.152706</td>\n",
+       "      <td>-1.129797</td>\n",
+       "      <td>-0.202240</td>\n",
+       "      <td>-1.828051</td>\n",
+       "      <td>0.636759</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>-0.788702</td>\n",
+       "      <td>0.339318</td>\n",
+       "      <td>0.301511</td>\n",
+       "      <td>0.755873</td>\n",
+       "      <td>2.031693</td>\n",
+       "      <td>-0.870156</td>\n",
+       "      <td>2.599818</td>\n",
+       "      <td>0.285707</td>\n",
+       "      <td>-0.682494</td>\n",
+       "      <td>-0.377850</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>0.982841</td>\n",
+       "      <td>1.060193</td>\n",
+       "      <td>-0.621399</td>\n",
+       "      <td>0.625299</td>\n",
+       "      <td>0.452820</td>\n",
+       "      <td>-0.267220</td>\n",
+       "      <td>1.750208</td>\n",
+       "      <td>1.066491</td>\n",
+       "      <td>1.241325</td>\n",
+       "      <td>-1.026987</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1.139275</td>\n",
+       "      <td>-0.640392</td>\n",
+       "      <td>-0.709819</td>\n",
+       "      <td>-0.057175</td>\n",
+       "      <td>0.822886</td>\n",
+       "      <td>-0.936773</td>\n",
+       "      <td>0.596782</td>\n",
+       "      <td>-1.472352</td>\n",
+       "      <td>1.040772</td>\n",
+       "      <td>0.276510</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        WTT       PTI       EQW       SBI       LQE       QWG       FDJ  \\\n",
+       "0 -0.123542  0.185907 -0.913431  0.319629 -1.033637 -2.308375 -0.798951   \n",
+       "1 -1.084836 -0.430348 -1.025313  0.625388 -0.444847 -1.152706 -1.129797   \n",
+       "2 -0.788702  0.339318  0.301511  0.755873  2.031693 -0.870156  2.599818   \n",
+       "3  0.982841  1.060193 -0.621399  0.625299  0.452820 -0.267220  1.750208   \n",
+       "4  1.139275 -0.640392 -0.709819 -0.057175  0.822886 -0.936773  0.596782   \n",
+       "\n",
+       "        PJF       HQE       NXJ  \n",
+       "0 -1.482368 -0.949719 -0.643314  \n",
+       "1 -0.202240 -1.828051  0.636759  \n",
+       "2  0.285707 -0.682494 -0.377850  \n",
+       "3  1.066491  1.241325 -1.026987  \n",
+       "4 -1.472352  1.040772  0.276510  "
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#由於KNN分類法是藉由確認最近的觀察值來預測分類，因此變數的比例就會影響很大\n",
+    "#載入標準化比例尺(StandardScaler)套件，只將所有`特徵值`做標準化\n",
+    "from sklearn.preprocessing import StandardScaler\n",
+    "scaler=StandardScaler()\n",
+    "scaler.fit(df.drop('TARGET CLASS',axis=1))\n",
+    "scaled_features=scaler.transform(df.drop('TARGET CLASS',axis=1))\n",
+    "df_feat=pd.DataFrame(scaled_features, columns=df.columns[:-1])\n",
+    "print(df_feat)\n",
+    "df_feat.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#將資料分成訓練組及測試組\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "X=df_feat\n",
+    "y=df['TARGET CLASS']\n",
+    "X_train,X_test,y_train,y_test= train_test_split(X,y,test_size=0.3,random_state=101)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#使用KNN演算法\n",
+    "from sklearn.neighbors import KNeighborsClassifier\n",
+    "knn=KNeighborsClassifier(n_neighbors=1)\n",
+    "knn.fit(X_train,y_train)\n",
+    "pred=knn.predict(X_test)\n",
+    "#從k=1開始測試\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[151   8]\n",
+      " [ 15 126]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "#測試KNN演算法的好壞\n",
+    "from sklearn.metrics import classification_report,confusion_matrix\n",
+    "print(confusion_matrix(y_test,pred))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "              precision    recall  f1-score   support\n",
+      "\n",
+      "           0       0.91      0.95      0.93       159\n",
+      "           1       0.94      0.89      0.92       141\n",
+      "\n",
+      "    accuracy                           0.92       300\n",
+      "   macro avg       0.92      0.92      0.92       300\n",
+      "weighted avg       0.92      0.92      0.92       300\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(classification_report(y_test,pred))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#剛剛只先用了k=1來建立模型，現在利用for來建立迴圈(選擇不同k值)，並紀錄錯誤率\n",
+    "error_rate = []\n",
+    "for i in range(1,60):\n",
+    "    knn_i=KNeighborsClassifier(n_neighbors=i)\n",
+    "    knn_i.fit(X_train,y_train)\n",
+    "    pred_i=knn.predict(X_test)\n",
+    "    error_rate.append(np.mean(pred_i)!=y_test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Text(0, 0.5, 'Error Rate')"
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 720x432 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "#將k=1~60的錯誤率製圖畫出。k=23之後，錯誤率就在5-6%之間震盪。\n",
+    "plt.figure(figsize=(10,6))\n",
+    "plt.plot(range(1,60),error_rate,color='blue',linestyle='dashed',marker='o',markerfacecolor='red',markersize=10)\n",
+    "plt.title('Error Rate vs. K Value')\n",
+    "plt.xlabel('K')\n",
+    "plt.ylabel('Error Rate')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "WITH k=40\n",
+      "\n",
+      "\n",
+      "[[154   5]\n",
+      " [  7 134]]\n",
+      "\n",
+      "\n",
+      "              precision    recall  f1-score   support\n",
+      "\n",
+      "           0       0.96      0.97      0.96       159\n",
+      "           1       0.96      0.95      0.96       141\n",
+      "\n",
+      "    accuracy                           0.96       300\n",
+      "   macro avg       0.96      0.96      0.96       300\n",
+      "weighted avg       0.96      0.96      0.96       300\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "#跟一開始k=1做比較\n",
+    "knn = KNeighborsClassifier(n_neighbors=40)\n",
+    "\n",
+    "knn.fit(X_train,y_train)\n",
+    "pred = knn.predict(X_test)\n",
+    "\n",
+    "print('WITH k=40')\n",
+    "print('\\n')\n",
+    "print(confusion_matrix(y_test,pred))\n",
+    "print('\\n')\n",
+    "print(classification_report(y_test,pred))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#選擇錯誤率最低的K=?????來看precision、recall、f1-score、support表現\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
